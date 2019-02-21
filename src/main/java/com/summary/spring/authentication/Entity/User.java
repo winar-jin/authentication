@@ -1,10 +1,13 @@
 package com.summary.spring.authentication.Entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1758934475655268063L;
+
     @Id
     @GeneratedValue
     Long id;

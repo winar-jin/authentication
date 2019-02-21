@@ -3,6 +3,7 @@ package com.summary.spring.authentication.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @EnableAuthorizationServer
 @Configuration
@@ -25,6 +26,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Autowired
     PasswordEncoder password;
+
+    @Autowired
+    RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -43,14 +47,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints.tokenStore(tokenStore())
                  .tokenServices(tokenServices())
                  .authenticationManager(authenticationManager)
-                 .accessTokenConverter(jwtTokenEnhancer())
+//                 .accessTokenConverter(jwtTokenEnhancer())
                  .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 
     private AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer());
+//        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer());
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setAccessTokenValiditySeconds(10 * 60);
         defaultTokenServices.setRefreshTokenValiditySeconds(10 * 60);
@@ -64,7 +68,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Bean
     TokenStore tokenStore() {
-        return new JwtTokenStore(jwtTokenEnhancer());
+//        return new JwtTokenStore(jwtTokenEnhancer());
+        return new RedisTokenStore(redisConnectionFactory);
     }
 
     @Bean
