@@ -36,8 +36,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                .withClient("web")
                .scopes("read", "write")
                .secret(password.encode("123456"))
-               .accessTokenValiditySeconds(3600 * 1000)
-               .refreshTokenValiditySeconds(3600 * 1000)
+               .accessTokenValiditySeconds(10 * 60)
+               .refreshTokenValiditySeconds(10 * 60)
                .authorizedGrantTypes("client_credentials", "refresh_token", "password")
                .authorities("oauth2");
     }
