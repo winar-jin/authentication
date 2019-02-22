@@ -16,7 +16,11 @@ import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -76,9 +80,18 @@ public class AuthController {
 
             tokenStore.removeAccessToken(accessToken);
             tokenService.revokeToken(String.valueOf(accessToken));
-            
+
             return new ResponseEntity("logout successful!", HttpStatus.OK);
         }
         return new ResponseEntity("logout failed!", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/oauth/tokens")
+    public List<Object> getAllTokens(@RequestParam("clientId") String clientId) {
+        Collection<OAuth2AccessToken> tokens = tokenStore.findTokensByClientId(clientId);
+        return tokens.stream()
+                     .map((Function<OAuth2AccessToken, Object>) OAuth2AccessToken::getValue)
+                     .collect(Collectors.toList());
+
     }
 }
