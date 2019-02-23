@@ -3,9 +3,9 @@
 
 #### How to use:
 * `git clone https://github.com/winar-jin/authentication.git`
-* go to the root of this repository: `cd authentication`
-* run `./gradlew build` to build the project
-* run `./gradlew bootRun` to run the project, when you see "* run `./gradlew bootRun` to run the project, when you see "Tomcat started on port(s): 8080 (http) with context path.", that means you run successful.
+* Go to the root of this repository: `cd authentication`
+* Run `./gradlew build` to build the project
+* Run `./gradlew bootRun` to run the project, when you see "Tomcat started on port(s): 8080 (http) with context path", that means you run successful.
 
 #### Api example
 * Register a new user:
