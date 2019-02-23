@@ -113,7 +113,7 @@
 * Refresh token by `refresh_token`.
 > When your access token expire, it will become a invalid token. Then you can use refresh token to get a new token. Usually the refresh token will live longer than access token. But after you logout the access token, the related refresh token will be invalid too.
 
-    *Request:
+    * Request:
     ```
     GET /oauth/token?grant_type=refresh_token&amp; refresh_token=a9fc2ab3-6c4b-4c77-914f-90013bb3e01a&amp; client_id=web&amp; client_secret=123456 HTTP/1.1
     Host: localhost:8080
