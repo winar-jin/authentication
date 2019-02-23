@@ -37,7 +37,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                .scopes("read", "write")
                .secret(password.encode("123456"))
                .accessTokenValiditySeconds(10 * 60)
-               .refreshTokenValiditySeconds(10 * 60)
+               .refreshTokenValiditySeconds(20 * 60)
                .authorizedGrantTypes("client_credentials", "refresh_token", "password")
                .authorities("oauth2");
     }
@@ -57,7 +57,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 //        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer());
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setAccessTokenValiditySeconds(10 * 60);
-        defaultTokenServices.setRefreshTokenValiditySeconds(10 * 60);
+        defaultTokenServices.setRefreshTokenValiditySeconds(20 * 60);
         return defaultTokenServices;
     }
 
